@@ -4,6 +4,7 @@
 let articleView = {};
 console.log('see if this works for the start');
 articleView.populateFilters = function() {
+  console.log('see if this works for the test');
   $('article').each(function() {
     console.log('see if this works for the articleView');
     // REVIEW: We can declare several variables at once and assign their values later when using let. Keep in mind that we cannot do this with const.
@@ -102,9 +103,11 @@ articleView.setTeasers = function() {
   $('.main-nav').on('click', function() {
 
   });
-
-  // TODO: Call all of the above functions, once we are sure the DOM is ready.
-  $(document).ready(function() {
-
-  });
-}
+};
+// TODO: Call all of the above functions, once we are sure the DOM is ready.
+$(document).ready(function() {
+  articleView.populateFilters();
+  articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
+  articleView.setTeasers();
+});
