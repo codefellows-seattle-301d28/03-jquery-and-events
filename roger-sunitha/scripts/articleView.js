@@ -27,7 +27,7 @@ articleView.populateFilters = function() {
       // done: Refactor this concatenation using a template literal.
       optionTag = `<option value="${category}">${category}</option>`;
 
-      if ($('#category-filter option[value="' + category + '"]').length === 0) {
+      if ($(`#category-filter option[value="${category}"]`).length === 0) {
         $('#category-filter').append(optionTag);
       }
     }
@@ -69,7 +69,7 @@ articleView.handleCategoryFilter = function() {
       $('article').hide();
       let categorystring = $(this).val();
       console.log('cat value ' + categorystring);
-      $(`article[data-category|=${categorystring}]`).fadeIn(1000); 
+      $(`article[data-category|=${categorystring}]`).fadeIn(1000);
     } else {
       $('article').show();
       $('article.template').hide();
@@ -87,28 +87,38 @@ articleView.handleMainNav = function() {
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
 
 
+  $('#articles').hide();
+  $('#about').hide();
+
+  $('.main-nav .tab').on('click', function() {
+    console.log('inside tab');
     $('#articles').hide();
-    $('#about').hide();  
-  
-    $('.main-nav .tab').on('click', function() {
-      console.log('inside tab');
-      $('#articles').hide();
-      $('#about').hide();      
-      let $tabClicked = $(this).data('content');  
-      console.log('tab clicked-'+ $tabClicked);
-      $('#' + $tabClicked).fadeIn(2000);
-    });
-    $('.main-nav .tab:first').click();
-    
+    $('#about').hide();
+    let $tabClicked = $(this).data('content');
+    console.log('tab clicked-'+ $tabClicked);
+    $('#' + $tabClicked).fadeIn(2000);
+  });
+  $('.main-nav .tab:first').click();
+
 };
 
 
 articleView.setTeasers = function() {
-   // REVIEW: Hide elements beyond the first 2 in any article body.
+  // REVIEW: Hide elements beyond the first 2 in any article body.
   $('.article-body *:nth-of-type(n+2)').hide();
+
+
+  $('.read-on').on('click', function() {
+    // let $articleClicked =  $(this).parent();
+    let $articleClicked =  ($(this).prev() + '*:nth-of-type(n+2)');
+    // $($(this).prev()).show();
+
+    $('.article-body *:nth-of-type(n+2)').show();
+    // console.log('inside function read-on',$articleClicked);
 
   // TODO: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
   // Ideally, we'd attach this as just one event handler on the #articles section, and let it process (in other words... delegate) any .read-on clicks that happen within child nodes.
+  });
 };
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
@@ -117,4 +127,5 @@ $(document).ready(function() {
   articleView.handleAuthorFilter();
   articleView.handleCategoryFilter();
   articleView.handleMainNav();
-})
+  articleView.setTeasers();
+});
