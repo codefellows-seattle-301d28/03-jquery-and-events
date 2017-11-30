@@ -16,6 +16,10 @@
   padding: 0.1em;
 }
 
+.template {
+  display: none;
+}
+
 .main-nav ul {
   display: none;
   padding: 0;
