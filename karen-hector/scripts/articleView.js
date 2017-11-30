@@ -4,6 +4,7 @@
 let articleView = {};
 
 articleView.populateFilters = function() {
+  console.log('populateFilters');
   $('article').each(function() {
     // REVIEW: We can declare several variables at once and assign their values later when using let. Keep in mind that we cannot do this with const.
     let authorName, category, optionTag;
@@ -15,8 +16,7 @@ articleView.populateFilters = function() {
 
       // TODO-ne: Refactor this concatenation using a template literal.
       optionTag = `<option value="${authorName}"> ${authorName}</option>`;
-      console.log(optionTag);
-      if ($('#author-filter option[value="' + authorName + '"]').length === 0) {
+      if ($(`#author-filter option[value="' ${authorName} '"]`).length === 0) {
         $('#author-filter').append(optionTag);
       }
 
@@ -26,9 +26,11 @@ articleView.populateFilters = function() {
 
       // TODO-ne: Refactor this concatenation using a template literal.
       optionTag = `<option value="${category}">${category}</option>`;
+      console.log(optionTag);
 
-      if ($('#category-filter option[value="' + category + '"]').length === 0) {
+      if ($(`#category-filter option[value="' ${category} '"]`).length === 0) {
         $('#category-filter').append(optionTag);
+
       }
     }
   });
@@ -41,12 +43,12 @@ articleView.handleAuthorFilter = function() {
     if ($(this).val()) {
       // TODO-ne: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
-      $('article').fadeOut(350);
-      $(`article[data-author=${$(this).val()}"]`).fadeIn(350);
+      $('article').fadeOut(750);
+      $(`article[data-author=${$(this).val()}"]`).fadeIn(750);
 
     } else {
       // TODO-ne: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
-      $('.articles').fadeIn(750);
+      $('article').fadeIn(750);
       $('.template').hide();
 
     }
@@ -63,12 +65,12 @@ articleView.handleCategoryFilter = function() {
 
     if ($(this).val()) {
 
-      $('.articles').hide();
+      $('article').hide();
       $(this).fadeIn(750);
 
     } else {
 
-      $('.articles').fadeIn(750);
+      $('article').fadeIn(750);
       $('.template').hide();
 
     }
@@ -95,5 +97,11 @@ articleView.setTeasers = function() {
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function() {
+  articleView.setTeasers();
+  articleView.handleMainNav();
+  articleView.handleCategoryFilter();
+  articleView.handleAuthorFilter();
+  articleView.populateFilters();
+
 
 })
