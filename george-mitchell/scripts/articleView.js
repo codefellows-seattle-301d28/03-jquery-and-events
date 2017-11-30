@@ -54,7 +54,7 @@ articleView.handleAuthorFilter = function() {
 };
 
 articleView.handleCategoryFilter = function() {
-  // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
+  // DONE: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
   $('#category-filter').on('change', function() {
   // When an option with a value is selected, hide all the articles, then reveal the matches.
     if($(this).val()) {
@@ -72,7 +72,12 @@ articleView.handleCategoryFilter = function() {
 
 articleView.handleMainNav = function() {
   // TODO: Add an event handler to .main-nav elements that will power the Tabs feature.
-  // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
+  $('.main-nav').on('click', '.tab', function() {
+    // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
+    $('.tab-content').hide();
+    $(`#${$(this).data('content')}`).fadeIn(750);
+  });
+
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
 
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
@@ -91,5 +96,6 @@ articleView.setTeasers = function() {
 $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
-  // articleView.handleCategoryFilter();
+  articleView.handleCategoryFilter();
+  articleView.handleMainNav();
 })
