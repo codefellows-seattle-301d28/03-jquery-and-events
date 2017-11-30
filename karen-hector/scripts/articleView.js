@@ -15,7 +15,7 @@ articleView.populateFilters = function() {
 
       // TODO-ne: Refactor this concatenation using a template literal.
       optionTag = `<option value="${authorName}"> ${authorName}</option>`;
-
+      console.log(optionTag);
       if ($('#author-filter option[value="' + authorName + '"]').length === 0) {
         $('#author-filter').append(optionTag);
       }
@@ -41,8 +41,8 @@ articleView.handleAuthorFilter = function() {
     if ($(this).val()) {
       // TODO-ne: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
-      $('.articles').hide();
-      $(this).fadeIn(750);
+      $('article').fadeOut(350);
+      $(`article[data-author=${$(this).val()}"]`).fadeIn(350);
 
     } else {
       // TODO-ne: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
