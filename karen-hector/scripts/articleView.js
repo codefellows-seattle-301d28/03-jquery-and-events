@@ -49,7 +49,7 @@ articleView.handleAuthorFilter = function() {
     } else {
       // TODO-ne: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
       $('article').fadeIn(750);
-      $('.template').hide();
+      $('.template').show();
 
     }
     $('#category-filter').val('');
