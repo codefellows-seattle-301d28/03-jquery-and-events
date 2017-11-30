@@ -4,9 +4,7 @@
 let articleView = {};
 console.log('see if this works for the start');
 articleView.populateFilters = function() {
-  console.log('see if this works for the test');
   $('article').each(function() {
-    console.log('see if this works for the articleView');
     // REVIEW: We can declare several variables at once and assign their values later when using let. Keep in mind that we cannot do this with const.
     let authorName, category, optionTag;
     if (!$(this).hasClass('template')) {
@@ -28,7 +26,7 @@ articleView.populateFilters = function() {
       category = $(this).attr('data-category');
 
       // DONE: Refactor this concatenation using a template literal.
-      optionTag = `<option value="${category}">${category}</option>`;
+      optionTag = `<option value="${category}"> ${category} </option>`;
 
       if ($('#category-filter option[value="' + category + '"]').length === 0) {
         $('#category-filter').append(optionTag);
@@ -40,20 +38,20 @@ articleView.populateFilters = function() {
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     // REVIEW: Inside this function, "this" is the element that triggered the event handler function we are defining. "$(this)" is using jQuery to select that element (analogous to event.target that we have seen before), so we can chain jQuery methods onto it.
-    console.log('this is this in articleView',this);
+
     if ($(this).val()) {
       // DONE: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
       console.log('this is this in articleView',this);
-      $(this).hide();
+      $('article').hide();
       let location = $(this).val();
-      $('option[data-author]="+' + location + '"').show();
+      $('article[data-author="' + location + '"]').show();
 
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
 
     } else {
       // DO: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
-      $(this).show();
-      $('.template').hide();
+
+      $('article').show();
     }
     $('#category-filter').val('');
   });
@@ -67,13 +65,13 @@ articleView.handleCategoryFilter = function() {
   $('#category-filter').on('change', function() {
     if ($(this).val()) {
 
-      $(this).hide();
+      $('article').hide();
       let location = $(this).val();
-      $('option[data-category]="+' + location + '"').show();
+      $('article[data-category="' + location + '"]').show();
 
     } else {
-      $(this).show();
-      $('.template').hide();
+
+      $('article').show();
     }
     $('#category-filter').val('');
   });
@@ -84,7 +82,7 @@ articleView.handleMainNav = function() {
   $('.main-nav').on('change', function() {
     $('.tab').hide();
     let location = $(this).val();
-    $('option[data-content]="' + location + '"').show();
+    $('option[data-content="' + location + '"]').show();
   });
   // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
