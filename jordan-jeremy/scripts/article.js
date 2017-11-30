@@ -11,7 +11,7 @@ function Article (rawDataObj) {
   this.publishedOn = rawDataObj.publishedOn;
 }
 
-Article.prototype.toHtml = function() {
+  Article.prototype.toHtml = function() {
   let $newArticle = $('article.template').clone();
   $newArticle.removeClass('template');
   if (!this.publishedOn) {
