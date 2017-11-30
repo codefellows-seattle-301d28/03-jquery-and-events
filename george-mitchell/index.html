@@ -77,13 +77,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="scripts/blogArticles.js"></script>
   <script src="scripts/article.js"></script>
-  <!-- TODO: Link our new script file in. -->
+  <!-- DONE: Link our new script file in. -->
   <script type="text/javascript" src='scripts/articleView.js'>
 
   </script>
 
 
   <!-- COMMENT: Explain the ordering of your script files. -->
-  <!-- PUT YOUR RESPONSE HERE -->
+  <!-- All of the files located in scripts rely on jQuery to some extent, or at least interact with other files that rely on jQuery so it is placed above all others. The blogArticles.js file is the raw data of each article, which is utlized in the other two js files so it goes above both of them. The article.js file is what is populating the page with articles with data from blogArticles.js, so it goes next since articleView.js affects the already-populated articles and must come after it. -->
 </body>
 </html>
