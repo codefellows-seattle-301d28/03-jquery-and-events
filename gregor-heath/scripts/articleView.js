@@ -48,9 +48,9 @@ articleView.handleAuthorFilter = function() {
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
 
     } else {
-      // DO: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
-
+      // DONE: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
       $('article').show();
+      $('article.template').hide();
     }
     $('#category-filter').val('');
   });
@@ -69,10 +69,10 @@ articleView.handleCategoryFilter = function() {
       $('article[data-category="' + location + '"]').show();
 
     } else {
-
       $('article').show();
+      $('article.template').hide();
     }
-    $('#category-filter').val('');
+    $('#author-filter').val('');
   });
 };
 
@@ -101,9 +101,17 @@ articleView.setTeasers = function() {
   $('.read-on').on('click', function(e) {
     let title = $(this).parent();
     e.preventDefault();
-    title.find('p').toggle();
-    title.find('.read-on').hide();
-    
+    title.find('p').show();
+    // title.find('.read-on').hide(); normal solution. Fully works
+    // if statement for stretch goal. Also works.
+    if (title.find('.read-on').text() === 'Read on →') {
+      title.find('.read-on').text('Show less');
+    } else {
+      title.find('.read-on').text('Read on →');
+      $('.article-body *:nth-of-type(n+2)').hide();
+    }
+
+
   });
 };
 // DONE: Call all of the above functions, once we are sure the DOM is ready.
