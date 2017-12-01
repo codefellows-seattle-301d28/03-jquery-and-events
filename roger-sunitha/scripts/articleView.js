@@ -37,7 +37,6 @@ articleView.populateFilters = function() {
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
     // REVIEW: Inside this function, "this" is the element that triggered the event handler function we are defining. "$(this)" is using jQuery to select that element (analogous to event.target that we have seen before), so we can chain jQuery methods onto it.
-    console.log('function run');
     if ($(this).val()) {
       // done: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
@@ -46,12 +45,10 @@ articleView.handleAuthorFilter = function() {
 
       let authorstring = $(this).val();
       $( `article:contains(${authorstring})`).fadeIn(1000);
-      console.log('has value ');
     } else {
       // done: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
       $('article').show();
       $('article.template').hide();
-      console.log('inside else ');
     }
     $('#category-filter').val('');
   });
@@ -64,16 +61,13 @@ articleView.handleCategoryFilter = function() {
   // Be sure to reset the #author-filter while you are at it!
   $('#category-filter').on('change', function() {
     // REVIEW: Inside this function, "this" is the element that triggered the event handler function we are defining. "$(this)" is using jQuery to select that element (analogous to event.target that we have seen before), so we can chain jQuery methods onto it.
-    console.log('function run');
     if ($(this).val()) {
       $('article').hide();
       let categorystring = $(this).val();
-      console.log('cat value ' + categorystring);
-      $(`article[data-category|=${categorystring}]`).fadeIn(1000);
+      $(`article[data-category = "${categorystring}"]`).fadeIn(1000);
     } else {
       $('article').show();
       $('article.template').hide();
-      console.log('inside else ');
     }
     $('#author-filter').val('');
   });
@@ -90,12 +84,10 @@ articleView.handleMainNav = function() {
   $('#articles').hide();
   $('#about').hide();
 
-  $('.main-nav .tab').on('click', function() {
-    console.log('inside tab');
-    $('#articles').hide();
-    $('#about').hide();
+  $('.main-nav').on('click', '.tab', function(e) {
+    e.preventDefault();
+    $('.tab-content').hide();
     let $tabClicked = $(this).data('content');
-    console.log('tab clicked-'+ $tabClicked);
     $('#' + $tabClicked).fadeIn(2000);
   });
   $('.main-nav .tab:first').click();
@@ -108,20 +100,26 @@ articleView.setTeasers = function() {
   $('.article-body *:nth-of-type(n+2)').hide();
 
 
-  $('.read-on').on('click', function() {
-    // let $articleClicked =  $(this).parent();
-    let $articleClicked =  ($(this).prev() + '*:nth-of-type(n+2)');
-    // $($(this).prev()).show();
+  $('article').on('click', 'a.read-on', function(e) {
+    e.preventDefault();
+    if ($(this).text() === 'Read on \u2192') {
+      $(this).parent().find('*').show();
+      $(this).html('Show less &larr;');
+    } else {
+      $(this).html('Read on &rarr;');
+      $(this).parent().find('.article-body *:nth-of-type(n+2)').hide();
+      console.log('in the else section');
+    }
 
-    $('.article-body *:nth-of-type(n+2)').show();
-    // console.log('inside function read-on',$articleClicked);
 
-  // TODO: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
+
+
+  // done: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
   // Ideally, we'd attach this as just one event handler on the #articles section, and let it process (in other words... delegate) any .read-on clicks that happen within child nodes.
   });
 };
 
-// TODO: Call all of the above functions, once we are sure the DOM is ready.
+// done: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
