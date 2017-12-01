@@ -101,8 +101,10 @@ articleView.setTeasers = function() {
   $('.read-on').on('click', function(e) {
     let title = $(this).parent();
     e.preventDefault();
-    title.find('p').toggle();
+    title.find('p').show();
     title.find('.read-on').hide();
+
+
 
   });
 };
